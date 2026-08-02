@@ -1,4 +1,4 @@
-﻿namespace UiIntegration.Engine.Types
+﻿namespace GameFramework_SeaBedExplorationDemo.Engine.Types
 {
     public class Vector3 : IEquatable<Vector3>
     {

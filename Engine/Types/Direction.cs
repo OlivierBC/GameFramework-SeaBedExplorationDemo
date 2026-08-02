@@ -1,4 +1,4 @@
-﻿namespace UiIntegration.Engine.Types
+﻿namespace GameFramework_SeaBedExplorationDemo.Engine.Types
 {
     public enum Direction
     {

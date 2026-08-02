@@ -1,4 +1,4 @@
-﻿namespace UiIntegration.Engine.UI
+﻿namespace GameFramework_SeaBedExplorationDemo.Engine.UI
 {
     public enum UIInteractionState
     {

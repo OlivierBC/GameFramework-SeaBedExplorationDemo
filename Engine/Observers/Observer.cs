@@ -5,7 +5,7 @@
 
 // This pattern implementation is simply based on what I'm used to working with: the unityEngine
 
-namespace UiIntegration.Engine.Observers
+namespace GameFramework_SeaBedExplorationDemo.Engine.Observers
 {
     internal class Observer<T>
     {

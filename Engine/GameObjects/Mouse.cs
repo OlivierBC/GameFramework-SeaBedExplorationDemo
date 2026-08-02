@@ -1,7 +1,7 @@
 ﻿using Raylib_cs;
-using UiIntegration.Engine.Types;
+using GameFramework_SeaBedExplorationDemo.Engine.Types;
 
-namespace UiIntegration.Engine.GameObjects
+namespace GameFramework_SeaBedExplorationDemo.Engine.GameObjects
 {
     internal static class Mouse
     {

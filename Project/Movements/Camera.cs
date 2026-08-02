@@ -1,10 +1,9 @@
-﻿using Raylib_cs;
-using UiIntegration.Engine.GameObjects;
-using UiIntegration.Engine.Observers.Observables;
-using UiIntegration.Engine.Types;
+﻿using GameFramework_SeaBedExplorationDemo.Engine.GameObjects;
+using GameFramework_SeaBedExplorationDemo.Engine.Observers.Observables;
+using GameFramework_SeaBedExplorationDemo.Engine.Types;
+using Raylib_cs;
 
-
-namespace UiIntegration.Project.Movements
+namespace GameFramework_SeaBedExplorationDemo.Project.Movements
 {
     internal class Camera : Entity, IUpdatable
     {

@@ -1,4 +1,4 @@
-﻿namespace UiIntegration.Engine.Observers.Observables
+﻿namespace GameFramework_SeaBedExplorationDemo.Engine.Observers.Observables
 {
     internal interface IDrawable2D
     {

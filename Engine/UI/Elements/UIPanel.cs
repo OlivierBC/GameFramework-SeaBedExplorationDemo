@@ -1,8 +1,8 @@
 ﻿using Raylib_cs;
-using UiIntegration.Engine.Collisions;
-using UiIntegration.Engine.UI.Data;
+using GameFramework_SeaBedExplorationDemo.Engine.Collisions;
+using GameFramework_SeaBedExplorationDemo.Engine.UI.Data;
 
-namespace UiIntegration.Engine.UI.Elements
+namespace GameFramework_SeaBedExplorationDemo.Engine.UI.Elements
 {
     internal class UIPanel : UIElement
     {

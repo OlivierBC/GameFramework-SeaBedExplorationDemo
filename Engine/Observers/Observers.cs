@@ -1,6 +1,6 @@
-﻿using UiIntegration.Engine.Observers.Observables;
+﻿using GameFramework_SeaBedExplorationDemo.Engine.Observers.Observables;
 
-namespace UiIntegration.Engine.Observers
+namespace GameFramework_SeaBedExplorationDemo.Engine.Observers
 {
     public static class Observers
     {

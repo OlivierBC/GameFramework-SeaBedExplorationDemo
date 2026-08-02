@@ -1,7 +1,7 @@
-﻿using UiIntegration.Engine.Collisions;
-using UiIntegration.Engine.Types;
+﻿using GameFramework_SeaBedExplorationDemo.Engine.Collisions;
+using GameFramework_SeaBedExplorationDemo.Engine.Types;
 
-namespace UiIntegration.Engine.UI
+namespace GameFramework_SeaBedExplorationDemo.Engine.UI
 {
     public abstract class UIElement
     {

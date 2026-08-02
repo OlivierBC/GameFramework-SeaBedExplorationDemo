@@ -1,6 +1,6 @@
-﻿using UiIntegration.Engine.Types;
+﻿using GameFramework_SeaBedExplorationDemo.Engine.Types;
 
-namespace UiIntegration.Engine.Collisions
+namespace GameFramework_SeaBedExplorationDemo.Engine.Collisions
 {
     public class UIRect
     {

@@ -1,6 +1,6 @@
-﻿using Raylib_cs;
-using UiIntegration.Engine.Observers;
-using UiIntegration.Project.Movements;
+﻿using GameFramework_SeaBedExplorationDemo.Engine.Observers;
+using GameFramework_SeaBedExplorationDemo.Project.Movements;
+using Raylib_cs;
 
 const int screenWidth = 1240;
 const int screenHeight = 720;

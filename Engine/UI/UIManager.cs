@@ -1,9 +1,10 @@
 ﻿using Raylib_cs;
-using UiIntegration.Engine.GameObjects;
-using UiIntegration.Engine.Observers.Observables;
-using UiIntegration.Engine.Types;
+using GameFramework_SeaBedExplorationDemo.Engine.GameObjects;
+using GameFramework_SeaBedExplorationDemo.Engine.Observers.Observables;
+using GameFramework_SeaBedExplorationDemo.Engine.Types;
+using GameFramework_SeaBedExplorationDemo.Engine.Observers.Observables;
 
-namespace UiIntegration.Engine.UI
+namespace GameFramework_SeaBedExplorationDemo.Engine.UI
 {
     public class UIManager : IUpdatable, IDrawableUI
     {
