@@ -1,36 +1,38 @@
 ﻿using Raylib_cs;
-using System.Numerics;
+using UiIntegration.Engine.Observers;
+using UiIntegration.Project.Movements;
 
 const int screenWidth = 1240;
 const int screenHeight = 720;
 
 Raylib.InitWindow(screenWidth, screenHeight, "Sea Bed Exploration Demo");
 
-Camera3D camera = new()
-{
-    Position = new Vector3(8.0f, 6.0f, 8.0f),
-    Target = Vector3.Zero,
-    Up = Vector3.UnitY,
-    FovY = 45.0f,
-    Projection = CameraProjection.Perspective
-};
+Camera gameCamera = new();
 
 while (!Raylib.WindowShouldClose())
 {
+    float dt = Raylib.GetFrameTime();
+
+    Observers.Update(dt);
+
     Raylib.BeginDrawing();
     Raylib.ClearBackground(new Color(8, 25, 45, 255));
 
-    Raylib.DrawText(
-        "Initial Raylib rendering test",
-        20,
-        20,
-        36,
-        Color.SkyBlue
-    );
+    Raylib.BeginMode3D(Camera.instance);
 
-    Raylib.DrawFPS(screenWidth - 100, 20);
+    Observers.Draw();
+
+    Raylib.DrawGrid(32, 1);
+
+    Raylib.EndMode3D();
+
+    Observers.DrawUI();
+
+    Raylib.DrawFPS(screenWidth - 150, 10);
 
     Raylib.EndDrawing();
 }
+
+Observers.Unload();
 
 Raylib.CloseWindow();
