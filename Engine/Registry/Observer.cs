@@ -11,7 +11,7 @@ namespace GameFramework_SeaBedExplorationDemo.Engine.Observers
     {
         List<T> observables = new();
 
-        public void Add(T observable)
+        public void Subscribe(T observable)
         {
             if (!observables.Contains(observable))
                 observables.Add(observable);
@@ -20,7 +20,7 @@ namespace GameFramework_SeaBedExplorationDemo.Engine.Observers
         public void AddRange(params T[] observables)
         {
             foreach (var observable in observables)
-                Add(observable);
+                Subscribe(observable);
         }
 
         public void Remove(T observable)

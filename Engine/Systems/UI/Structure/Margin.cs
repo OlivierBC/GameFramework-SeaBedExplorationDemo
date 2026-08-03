@@ -1,4 +1,4 @@
-﻿namespace GameFramework_SeaBedExplorationDemo.Engine.UI.Data
+﻿namespace GameFramework_SeaBedExplorationDemo.Engine.Systems.UI.Structure
 {
     internal class Margin
     {

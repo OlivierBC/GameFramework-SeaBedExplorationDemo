@@ -1,7 +1,7 @@
 ﻿using GameFramework_SeaBedExplorationDemo.Engine.Collisions;
 using GameFramework_SeaBedExplorationDemo.Engine.Types;
 
-namespace GameFramework_SeaBedExplorationDemo.Engine.UI
+namespace GameFramework_SeaBedExplorationDemo.Engine.Systems.UI
 {
     public abstract class UIElement
     {
@@ -10,7 +10,6 @@ namespace GameFramework_SeaBedExplorationDemo.Engine.UI
         public bool IsEnabled = true;
 
         public bool IsHovered = false;
-        //public bool IsFocused = false; // for text boxes
         public bool IsCaptured = false;
         public bool IsPressed = false;
 

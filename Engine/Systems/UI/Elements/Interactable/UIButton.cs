@@ -1,8 +1,9 @@
 ﻿using Raylib_cs;
 using GameFramework_SeaBedExplorationDemo.Engine.Types;
-using GameFramework_SeaBedExplorationDemo.Engine.UI.Data;
+using GameFramework_SeaBedExplorationDemo.Engine.Systems.UI;
+using GameFramework_SeaBedExplorationDemo.Engine.Systems.UI.Structure;
 
-namespace GameFramework_SeaBedExplorationDemo.Engine.UI.Elements.Interactable
+namespace GameFramework_SeaBedExplorationDemo.Engine.Systems.UI.Elements.Interactable
 {
     public class UIButton : UIElement
     {

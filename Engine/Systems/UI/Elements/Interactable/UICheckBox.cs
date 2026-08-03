@@ -1,7 +1,8 @@
 ﻿using Raylib_cs;
 using GameFramework_SeaBedExplorationDemo.Engine.Types;
+using GameFramework_SeaBedExplorationDemo.Engine.Systems.UI;
 
-namespace GameFramework_SeaBedExplorationDemo.Engine.UI.Elements.Interactable
+namespace GameFramework_SeaBedExplorationDemo.Engine.Systems.UI.Elements.Interactable
 {
     internal class UICheckBox : UIElement
     {

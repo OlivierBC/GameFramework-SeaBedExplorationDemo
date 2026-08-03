@@ -1,29 +1,19 @@
-﻿using Raylib_cs;
-using GameFramework_SeaBedExplorationDemo.Engine.GameObjects;
+﻿using GameFramework_SeaBedExplorationDemo.Engine.Base;
 using GameFramework_SeaBedExplorationDemo.Engine.Observers.Observables;
 using GameFramework_SeaBedExplorationDemo.Engine.Types;
-using GameFramework_SeaBedExplorationDemo.Engine.Observers.Observables;
+using Raylib_cs;
 
-namespace GameFramework_SeaBedExplorationDemo.Engine.UI
+namespace GameFramework_SeaBedExplorationDemo.Engine.Systems.UI
 {
-    public class UIManager : IUpdatable, IDrawableUI
+    public class UIManager : GameObject, IUpdatable, IDrawableUI
     {
         private readonly List<UIElement> elements = new();
 
         UIElement? HoveredElement; // element currently under mouse
-        //UIElement? FocusedElement; // element that can intake keyboard inputs
         UIElement? CapturedElement; // element receiving drag/tick until release
         UIElement? PressedElement; // element currently being pressed, throws Click() upon first press then isPressed == true until release
 
-        public UIManager()
-        {
-            Observers.Observers.Subscribe(this);
-        }
-
-        public UIManager(List<UIElement> elements) : this()
-        {
-            this.elements = elements;
-        }
+        public UIManager() { }
 
         public void Add(UIElement element)
         {

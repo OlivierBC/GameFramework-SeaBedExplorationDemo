@@ -1,7 +1,7 @@
-﻿using Raylib_cs;
-using GameFramework_SeaBedExplorationDemo.Engine.Types;
+﻿using GameFramework_SeaBedExplorationDemo.Engine.Types;
+using Raylib_cs;
 
-namespace GameFramework_SeaBedExplorationDemo.Engine.GameObjects
+namespace GameFramework_SeaBedExplorationDemo.Engine.Base
 {
     internal static class Mouse
     {

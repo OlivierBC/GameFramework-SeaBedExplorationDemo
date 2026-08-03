@@ -1,11 +1,11 @@
-﻿using GameFramework_SeaBedExplorationDemo.Engine.GameObjects;
+﻿using GameFramework_SeaBedExplorationDemo.Engine.Base;
 using GameFramework_SeaBedExplorationDemo.Engine.Observers.Observables;
 using GameFramework_SeaBedExplorationDemo.Engine.Types;
 using Raylib_cs;
 
 namespace GameFramework_SeaBedExplorationDemo.Project.Movements
 {
-    internal class Camera : Entity, IUpdatable
+    internal class Camera : GameObject, IUpdatable
     {
         float moveSpeed;
         float rotationSpeed;

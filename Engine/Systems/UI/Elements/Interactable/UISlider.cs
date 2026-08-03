@@ -1,24 +1,22 @@
 ﻿using Raylib_cs;
+using GameFramework_SeaBedExplorationDemo.Engine.Base;
 using GameFramework_SeaBedExplorationDemo.Engine.Types;
+using GameFramework_SeaBedExplorationDemo.Engine.Systems.UI;
 
-namespace GameFramework_SeaBedExplorationDemo.Engine.UI.Elements
+namespace GameFramework_SeaBedExplorationDemo.Engine.Systems.UI.Elements.Interactable
 {
-    public class UIProgressBar : UIElement
+    internal class UISlider : UIElement
     {
-        public Color BackColor;
-        public Color FillColor;
         public float Value { get; private set; } = 0f;
         public float MaxValue;
         public Direction FillDirection;
 
         float FillWidth => Value / MaxValue * Bounds.Width;
 
-        public UIProgressBar(Vector2 min, Vector2 max, float maxValue, Color backColor, Color fillColor, Direction fillDirection = Direction.Right) : base(new(min, max))
+        public UISlider(Vector2 min, Vector2 max, float maxValue, Direction fillDirection = Direction.Right) : base(new(min, max))
         {
             MaxValue = maxValue;
             FillDirection = fillDirection;
-            BackColor = backColor;
-            FillColor = fillColor;
         }
 
         public override void Draw()
@@ -27,12 +25,16 @@ namespace GameFramework_SeaBedExplorationDemo.Engine.UI.Elements
 
             int fillWidth = (int)FillWidth;
 
+            Color backColor = IsCaptured ? Color.DarkGray :
+                          IsHovered ? Color.Gray :
+                          Color.LightGray;
+
             Raylib.DrawRectangle(
                 (int)(Bounds.Min.X) + fillWidth,
                 (int)Bounds.Min.Y,
                 (int)(Bounds.Width) - fillWidth,
                 (int)Bounds.Height,
-                BackColor
+                backColor
             );
 
             Raylib.DrawRectangle(
@@ -40,10 +42,15 @@ namespace GameFramework_SeaBedExplorationDemo.Engine.UI.Elements
                 (int)Bounds.Min.Y,
                 fillWidth,
                 (int)Bounds.Height,
-                FillColor
+                Color.Yellow
             );
 
             base.Draw();
+        }
+
+        private void SetValueOnMousePos()
+        {
+            SetValue((Mouse.Position.X - Bounds.Min.X) / Bounds.Width * MaxValue);
         }
 
         public void SetValue(float newVal)
@@ -55,5 +62,7 @@ namespace GameFramework_SeaBedExplorationDemo.Engine.UI.Elements
             else
                 Value = newVal;
         }
+
+        public override void Tick(float dt) => SetValueOnMousePos();
     }
 }
