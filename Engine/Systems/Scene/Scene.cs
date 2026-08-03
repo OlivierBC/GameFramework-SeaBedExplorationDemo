@@ -2,14 +2,14 @@
 
 namespace GameFramework_SeaBedExplorationDemo.Engine.Systems.Scene
 {
-    public class Scene
+    public abstract class Scene
     {
         protected Registry registry = new();
 
-        public void Update(float dt) => registry.Update(dt);
-        public void Draw() => registry.Draw();
-        public void Draw2D() => registry.Draw2D();
-        public void DrawUI() => registry.DrawUI();
-        public void Unload() => registry.Unload();
+        public virtual void Update(float dt) => registry.Update(dt);
+        public virtual void Draw() => registry.Draw();
+        public virtual void Draw2D() => registry.Draw2D();
+        public virtual void DrawUI() => registry.DrawUI();
+        public virtual void Unload() => registry.Unload();
     }
 }

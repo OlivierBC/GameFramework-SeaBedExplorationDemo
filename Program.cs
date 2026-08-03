@@ -18,11 +18,18 @@ SceneManager sceneManager = new SceneManager(scene);
 
 UIManager uiManager = new UIManager();
 
-UIButton toggleScenes = new(new(50, 50), new(220, 120), "Change Scene", () => sceneManager.ChangeSceneNextFrame((sceneManager.currentScene is GeometryTestScene) ? new GeometryPlaygroundScene() : new GeometryTestScene()));
+UIButton toggleScenes = new(new(50, 50), new(220, 120), "Change Scene",
+    () =>
+    {
+        if (sceneManager.CurrentScene is GeometryTestScene)
+            sceneManager.ChangeSceneNextFrame<GeometryPlaygroundScene>();
+        else
+            sceneManager.ChangeSceneNextFrame<GeometryTestScene>();
+    }
+);
 uiManager.Add(toggleScenes);
 
 Camera gameCamera = new();
-
 
 MainRegistry.Add(uiManager);
 MainRegistry.Add(sceneManager);
@@ -32,6 +39,8 @@ MainRegistry.Add(gameCamera);
 while (!Raylib.WindowShouldClose())
 {
     float dt = Raylib.GetFrameTime();
+
+    sceneManager.ProcessTransition();
 
     MainRegistry.Update(dt);
 

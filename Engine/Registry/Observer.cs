@@ -23,9 +23,9 @@ namespace GameFramework_SeaBedExplorationDemo.Engine.Observers
                 Subscribe(observable);
         }
 
-        public void Remove(T observable)
+        public void UnsubscribeAll()
         {
-            observables.Remove(observable);
+            observables.Clear();
         }
 
         public void Notify(Action<T> action)

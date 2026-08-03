@@ -5,34 +5,37 @@ namespace GameFramework_SeaBedExplorationDemo.Engine.Systems.Scene
 {
     internal class SceneManager : GameObject, IUpdatable, IDrawable2D, IDrawable3D, IDrawableUI, IUnloadable
     {
-        public Scene currentScene { get; private set; } = new();
-        Scene? sceneToLoad;
-
-        public SceneManager() { }
-        public SceneManager(Scene startingScene) : this()
+        public Scene CurrentScene { get; private set; }
+        private Func<Scene>? initSceneToLoad;
+        public SceneManager(Scene startingScene)
         {
-            currentScene = startingScene;
+            CurrentScene = startingScene;
         }
 
         public void Update(float dt)
         {
-            if (sceneToLoad != null)
-            {
-                currentScene.Unload();
-                currentScene = sceneToLoad;
-                sceneToLoad = null;
-            }
-
-            currentScene.Update(dt);
+            CurrentScene.Update(dt);
         }
-        public void Draw() => currentScene.Draw();
-        public void Draw2D() => currentScene.Draw2D();
-        public void DrawUI() => currentScene.DrawUI();
-        public void Unload() => currentScene.Unload();
-
-        public void ChangeSceneNextFrame(Scene scene)
+        public void Draw() => CurrentScene.Draw();
+        public void Draw2D() => CurrentScene.Draw2D();
+        public void DrawUI() => CurrentScene.DrawUI();
+        public void Unload()
         {
-            sceneToLoad = scene;
+            CurrentScene.Unload();
+        }
+
+        public void ChangeSceneNextFrame<T>() where T : Scene, new()
+        {
+            initSceneToLoad = static () => new T();
+        }
+
+        public void ProcessTransition()
+        {
+            if (initSceneToLoad == null)
+                return;
+            CurrentScene.Unload();
+            CurrentScene = initSceneToLoad();
+            initSceneToLoad = null;
         }
     }
 }

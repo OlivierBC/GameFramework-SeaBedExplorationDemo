@@ -56,6 +56,12 @@ namespace GameFramework_SeaBedExplorationDemo.Engine.Observers
         public void Unload()
         {
             unloadObserver.Notify(x => x.Unload());
+
+            updateObserver.UnsubscribeAll();
+            drawObserver.UnsubscribeAll();
+            draw2DObserver.UnsubscribeAll();
+            drawUIObserver.UnsubscribeAll();
+            unloadObserver.UnsubscribeAll();
         }
     }
 }
