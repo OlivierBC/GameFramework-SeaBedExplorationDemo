@@ -3,7 +3,7 @@ using GameFramework_SeaBedExplorationDemo.Engine.Observers.Observables;
 
 namespace GameFramework_SeaBedExplorationDemo.Engine.Systems.Scene
 {
-    internal class SceneManager : GameObject, IUpdatable, IDrawable2D, IDrawable3D, IDrawableUI, IUnloadable
+    internal class SceneManager : GameObject, IUpdatable, IDrawable2D, IDrawable3D, IDrawableUI, IUnloadable, ILoadable
     {
         public Scene CurrentScene { get; private set; }
         private Func<Scene>? initSceneToLoad;
@@ -19,10 +19,8 @@ namespace GameFramework_SeaBedExplorationDemo.Engine.Systems.Scene
         public void Draw() => CurrentScene.Draw();
         public void Draw2D() => CurrentScene.Draw2D();
         public void DrawUI() => CurrentScene.DrawUI();
-        public void Unload()
-        {
-            CurrentScene.Unload();
-        }
+        public void Load() => CurrentScene.Load();
+        public void Unload() => CurrentScene.Unload();
 
         public void ChangeSceneNextFrame<T>() where T : Scene, new()
         {
@@ -34,8 +32,11 @@ namespace GameFramework_SeaBedExplorationDemo.Engine.Systems.Scene
             if (initSceneToLoad == null)
                 return;
             CurrentScene.Unload();
+
             CurrentScene = initSceneToLoad();
             initSceneToLoad = null;
+
+            CurrentScene.Load();
         }
     }
 }

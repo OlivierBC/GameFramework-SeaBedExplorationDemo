@@ -6,6 +6,7 @@ namespace GameFramework_SeaBedExplorationDemo.Engine.Systems.Scene
     {
         protected Registry registry = new();
 
+        public virtual void Load() => registry.Load();
         public virtual void Update(float dt) => registry.Update(dt);
         public virtual void Draw() => registry.Draw();
         public virtual void Draw2D() => registry.Draw2D();

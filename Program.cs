@@ -22,11 +22,12 @@ UIButton toggleScenes = new(new(50, 50), new(220, 120), "Change Scene",
     () =>
     {
         if (sceneManager.CurrentScene is GeometryTestScene)
-            sceneManager.ChangeSceneNextFrame<GeometryPlaygroundScene>();
+            sceneManager.ChangeSceneNextFrame<BoidScene>();
         else
             sceneManager.ChangeSceneNextFrame<GeometryTestScene>();
     }
 );
+
 uiManager.Add(toggleScenes);
 
 Camera gameCamera = new();
@@ -36,6 +37,8 @@ MainRegistry.Add(sceneManager);
 
 MainRegistry.Add(gameCamera);
 
+
+MainRegistry.Load();
 while (!Raylib.WindowShouldClose())
 {
     float dt = Raylib.GetFrameTime();

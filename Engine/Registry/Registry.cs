@@ -10,6 +10,7 @@ namespace GameFramework_SeaBedExplorationDemo.Engine.Observers
         Observer<IDrawable2D> draw2DObserver = new();
         Observer<IDrawableUI> drawUIObserver = new();
 
+        Observer<ILoadable> loadObserver = new();
         Observer<IUnloadable> unloadObserver = new();
 
         public void Add(params Object[] objects)
@@ -27,6 +28,9 @@ namespace GameFramework_SeaBedExplorationDemo.Engine.Observers
 
                 if (o is IDrawableUI drawableUI)
                     drawUIObserver.Subscribe(drawableUI);
+
+                if (o is ILoadable loadable)
+                    loadObserver.Subscribe(loadable);
 
                 if (o is IUnloadable unloadable)
                     unloadObserver.Subscribe(unloadable);
@@ -53,6 +57,11 @@ namespace GameFramework_SeaBedExplorationDemo.Engine.Observers
             draw2DObserver.Notify(x => x.Draw2D());
         }
 
+        public void Load()
+        {
+            loadObserver.Notify(x => x.Load());
+        }
+
         public void Unload()
         {
             unloadObserver.Notify(x => x.Unload());
@@ -61,6 +70,7 @@ namespace GameFramework_SeaBedExplorationDemo.Engine.Observers
             drawObserver.UnsubscribeAll();
             draw2DObserver.UnsubscribeAll();
             drawUIObserver.UnsubscribeAll();
+            loadObserver.UnsubscribeAll();
             unloadObserver.UnsubscribeAll();
         }
     }

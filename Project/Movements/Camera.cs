@@ -16,6 +16,18 @@ namespace GameFramework_SeaBedExplorationDemo.Project.Movements
         public static bool IsRotationUnlocked { get; private set; } = false;
         Vector2 mousePosBeforeDisable = new();
 
+        public static Vector3 GetPosition()
+        {
+            return instance.Position;
+        }
+
+        public static Vector3 GetForward()
+        {
+            return Vector3.Normalize(
+                instance.Target - instance.Position
+            );
+        }
+
         public static Camera3D instance = new()
         {
             Position = new Vector3(0, 6, 0),
@@ -37,7 +49,8 @@ namespace GameFramework_SeaBedExplorationDemo.Project.Movements
         {
             CameraRotation();
 
-            Vector3 forward = GetForward();
+            Vector3 forward = CalculateForward();
+
             Vector3 right = Vector3.Normalize(Vector3.Cross(forward, Vector3.UnitY));
 
             Vector3 flatForward = new(forward.X, 0, forward.Z);
@@ -110,13 +123,15 @@ namespace GameFramework_SeaBedExplorationDemo.Project.Movements
             Mouse.IsHitDetectionDisabled = IsRotationUnlocked;
         }
 
-        Vector3 GetForward()
+        Vector3 CalculateForward()
         {
-            return Vector3.Normalize(new Vector3(
-                MathF.Sin(yaw) * MathF.Cos(pitch),
-                MathF.Sin(pitch),
-                MathF.Cos(yaw) * MathF.Cos(pitch)
-            ));
+            return Vector3.Normalize(
+                new Vector3(
+                    MathF.Sin(yaw) * MathF.Cos(pitch),
+                    MathF.Sin(pitch),
+                    MathF.Cos(yaw) * MathF.Cos(pitch)
+                )
+            );
         }
     }
 }

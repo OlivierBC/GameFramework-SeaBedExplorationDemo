@@ -60,6 +60,11 @@
             );
         }
 
+        public static Vector3 Lerp(Vector3 a, Vector3 b, float t)
+        {
+            return a + (b - a) * t;
+        }
+
         public static Vector3 operator +(Vector3 a, Vector3 b)
         {
             return new Vector3(a.X + b.X, a.Y + b.Y, a.Z + b.Z);
