@@ -18,44 +18,20 @@ namespace GameFramework_SeaBedExplorationDemo.Project.ECS.Systems
         {
             foreach (var (entity, transform, modelComp) in world.Query<TransformComponent, ModelComponent>())
             {
-                Quaternion rotation = Quaternion.Normalize(transform.Rotation);
+                Quaternion rotation =
+                    Quaternion.CreateFromEulerDegrees(transform.Rotation);
 
-                float angle =
-                    2f * MathF.Acos(
-                        Math.Clamp(rotation.W, -1f, 1f)
-                    );
-
-                float sinHalfAngle =
-                    MathF.Sqrt(
-                        MathF.Max(
-                            0f,
-                            1f - rotation.W * rotation.W
-                        )
-                    );
-
-                Vector3 axis;
-
-                if (sinHalfAngle < 0.001f)
-                {
-                    axis = Vector3.UnitY;
-                }
-                else
-                {
-                    axis = new Vector3(
-                        rotation.X / sinHalfAngle,
-                        rotation.Y / sinHalfAngle,
-                        rotation.Z / sinHalfAngle
-                    );
-                }
-
-                float angleDegrees = angle * 180f / MathF.PI;
+                rotation.ToAxisAngle(
+                    out Vector3 axis,
+                    out float angle
+                );
 
                 Raylib.DrawModelEx(
                     modelComp.Model,
                     transform.Position,
                     axis,
-                    angleDegrees,
-                    Vector3.One * 10f,
+                    angle * 180f / MathF.PI,
+                    Vector3.One * transform.Scale,
                     Color.RayWhite
                 );
             }

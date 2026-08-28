@@ -20,6 +20,8 @@ namespace GameFramework_SeaBedExplorationDemo.Project.ECS.Systems
 
         private readonly string boidModelName;
 
+        private readonly float modelScale;
+
         public BoidSystem(
             ECSWorld world,
             int nbBoids = 200,
@@ -27,7 +29,8 @@ namespace GameFramework_SeaBedExplorationDemo.Project.ECS.Systems
             float speed = 10f,
             float terrainClearance = 3f,
             float terrainAvoidanceDistance = 10f,
-            string boidModelName = "fish"
+            string boidModelName = "fish",
+            float modelScale = 15f
         )
         {
             this.world = world;
@@ -37,6 +40,7 @@ namespace GameFramework_SeaBedExplorationDemo.Project.ECS.Systems
             this.terrainClearance = terrainClearance;
             this.terrainAvoidanceDistance = terrainAvoidanceDistance;
             this.boidModelName = boidModelName;
+            this.modelScale = modelScale;
         }
 
         public void Load()
@@ -48,7 +52,7 @@ namespace GameFramework_SeaBedExplorationDemo.Project.ECS.Systems
 
                 world.AddComponent(
                     boid,
-                    new TransformComponent()
+                    new TransformComponent(new(new(), Vector3.Zero, modelScale))
                 );
 
                 world.AddComponent(
@@ -308,41 +312,26 @@ namespace GameFramework_SeaBedExplorationDemo.Project.ECS.Systems
             ModelLibrary.UnloadModel(boidModelName);
         }
 
-        private static Quaternion DirectionToRotation(Vector3 direction)
+        private static Vector3 DirectionToRotation(Vector3 direction)
         {
             if (direction.LengthSquared() < 0.0001f)
-                return Quaternion.Identity;
+                return Vector3.Zero;
 
             direction = Vector3.Normalize(direction);
 
-            Vector3 modelForward = Vector3.UnitZ;
-
-            float dot = Math.Clamp(
-                Vector3.Dot(modelForward, direction),
-                -1f,
-                1f
+            float yaw = MathF.Atan2(
+                direction.X,
+                direction.Z
             );
 
-            if (dot > 0.9999f)
-                return Quaternion.Identity;
-
-            if (dot < -0.9999f)
-            {
-                return Quaternion.CreateFromAxisAngle(
-                    Vector3.UnitY,
-                    MathF.PI
-                );
-            }
-
-            Vector3 axis = Vector3.Normalize(
-                Vector3.Cross(modelForward, direction)
+            float pitch = -MathF.Asin(
+                Math.Clamp(direction.Y, -1f, 1f)
             );
 
-            float angle = MathF.Acos(dot);
-
-            return Quaternion.CreateFromAxisAngle(
-                axis,
-                angle
+            return new Vector3(
+                pitch * 180f / MathF.PI,
+                yaw * 180f / MathF.PI,
+                0f
             );
         }
 

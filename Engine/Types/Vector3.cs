@@ -35,6 +35,14 @@
         {
             return X * X + Y * Y + Z * Z;
         }
+        public static float Distance(Vector3 a, Vector3 b)
+        {
+            return (a - b).Length();
+        }
+        public static float DistanceSquared(Vector3 a, Vector3 b)
+        {
+            return (a - b).LengthSquared();
+        }
 
         public static Vector3 Normalize(Vector3 v)
         {
@@ -131,10 +139,7 @@
             return $"({X}, {Y}, {Z})";
         }
 
-        public System.Numerics.Vector3 ToSystemNumerics()
-        {
-            return new System.Numerics.Vector3(X, Y, Z);
-        }
+        public System.Numerics.Vector3 AsSystemNumerics => new System.Numerics.Vector3(X, Y, Z);
 
         public static Vector3 FromSystemNumerics(System.Numerics.Vector3 v)
         {

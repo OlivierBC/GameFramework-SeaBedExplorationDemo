@@ -1,11 +1,11 @@
 ﻿using GameFramework_SeaBedExplorationDemo.Engine.Base;
-using GameFramework_SeaBedExplorationDemo.Engine.Observers.Observables;
+using GameFramework_SeaBedExplorationDemo.Engine.Registries.Observables;
 using GameFramework_SeaBedExplorationDemo.Engine.Types;
 using Raylib_cs;
 
 namespace GameFramework_SeaBedExplorationDemo.Engine.Systems.Geometry
 {
-    public class Cylinder : GameObject, IDrawable3D
+    public class Cylinder : GameElement, IDrawable3D
     {
         public float TopRadius { get; set; }
         public float BottomRadius { get; set; }
@@ -25,7 +25,7 @@ namespace GameFramework_SeaBedExplorationDemo.Engine.Systems.Geometry
         public void Draw()
         {
             Raylib.DrawCylinder(
-                position,
+                Transform.Position,
                 TopRadius,
                 BottomRadius,
                 Height,

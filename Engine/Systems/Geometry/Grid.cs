@@ -1,10 +1,10 @@
 ﻿using GameFramework_SeaBedExplorationDemo.Engine.Base;
-using GameFramework_SeaBedExplorationDemo.Engine.Observers.Observables;
+using GameFramework_SeaBedExplorationDemo.Engine.Registries.Observables;
 using Raylib_cs;
 
 namespace GameFramework_SeaBedExplorationDemo.Engine.Systems.Geometry
 {
-    public class Grid : GameObject, IDrawable3D
+    public class Grid : Element, IDrawable3D
     {
         public int Slices { get; set; }
         public float Spacing { get; set; }

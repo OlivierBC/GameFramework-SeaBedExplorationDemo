@@ -1,9 +1,10 @@
-﻿using GameFramework_SeaBedExplorationDemo.Engine.Observers;
+﻿using GameFramework_SeaBedExplorationDemo.Engine.Registries;
 
 namespace GameFramework_SeaBedExplorationDemo.Engine.Systems.Scene
 {
     public abstract class Scene
     {
+        public static readonly Scene EmptyScene = new DefaultScene();
         protected Registry registry = new();
 
         public virtual void Load() => registry.Load();
@@ -12,5 +13,7 @@ namespace GameFramework_SeaBedExplorationDemo.Engine.Systems.Scene
         public virtual void Draw2D() => registry.Draw2D();
         public virtual void DrawUI() => registry.DrawUI();
         public virtual void Unload() => registry.Unload();
+
+        private class DefaultScene : Scene { }
     }
 }

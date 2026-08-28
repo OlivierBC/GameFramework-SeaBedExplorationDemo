@@ -10,6 +10,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="resources\scenes\seabed.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="resources\scenes\seabed.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Raylib-cs" Version="8.0.0" />
   </ItemGroup>
 
@@ -21,10 +31,6 @@
 		<None Update="resources\models\**\*">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
-	</ItemGroup>
-	
-	<ItemGroup>
-	  <Folder Include="resources\models\" />
 	</ItemGroup>
 
 </Project>

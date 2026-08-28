@@ -1,9 +1,9 @@
 ﻿using GameFramework_SeaBedExplorationDemo.Engine.Base;
-using GameFramework_SeaBedExplorationDemo.Engine.Observers.Observables;
+using GameFramework_SeaBedExplorationDemo.Engine.Registries.Observables;
 
 namespace GameFramework_SeaBedExplorationDemo.Engine.Systems.Scene
 {
-    internal class SceneManager : GameObject, IUpdatable, IDrawable2D, IDrawable3D, IDrawableUI, IUnloadable, ILoadable
+    internal class SceneManager : Element, IUpdatable, IDrawable2D, IDrawable3D, IDrawableUI, IUnloadable, ILoadable
     {
         public Scene CurrentScene { get; private set; }
         private Func<Scene>? initSceneToLoad;
@@ -11,6 +11,8 @@ namespace GameFramework_SeaBedExplorationDemo.Engine.Systems.Scene
         {
             CurrentScene = startingScene;
         }
+
+        public static SceneManager MainInstance = new(Scene.EmptyScene);
 
         public void Update(float dt)
         {
@@ -25,6 +27,12 @@ namespace GameFramework_SeaBedExplorationDemo.Engine.Systems.Scene
         public void ChangeSceneNextFrame<T>() where T : Scene, new()
         {
             initSceneToLoad = static () => new T();
+        }
+
+        public void ChangeScene<T>() where T : Scene, new()
+        {
+            ChangeSceneNextFrame<T>();
+            ProcessTransition();
         }
 
         public void ProcessTransition()

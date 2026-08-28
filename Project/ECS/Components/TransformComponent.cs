@@ -3,9 +3,9 @@ using GameFramework_SeaBedExplorationDemo.Engine.Types;
 
 namespace GameFramework_SeaBedExplorationDemo.Project.ECS.Components
 {
-    public class TransformComponent : IComponent
+    public class TransformComponent : Transform, IComponent
     {
-        public Vector3 Position = new();
-        public Quaternion Rotation = Quaternion.Identity;
+        public TransformComponent() { }
+        public TransformComponent(Transform transform) : base(transform.Position, transform.Rotation, transform.Scale) { }
     }
 }

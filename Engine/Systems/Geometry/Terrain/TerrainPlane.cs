@@ -1,5 +1,5 @@
 ﻿using GameFramework_SeaBedExplorationDemo.Engine.Base;
-using GameFramework_SeaBedExplorationDemo.Engine.Observers.Observables;
+using GameFramework_SeaBedExplorationDemo.Engine.Registries.Observables;
 using GameFramework_SeaBedExplorationDemo.Engine.Types;
 using GameFramework_SeaBedExplorationDemo.resources.shaders;
 using Raylib_cs;
@@ -10,7 +10,7 @@ namespace GameFramework_SeaBedExplorationDemo.Engine.Systems.Geometry.Terrain
     /// This class was AI generated for testing purposes and will deleted later on for a simpler solution that I can implement by myself.
     /// </summary>
     public class TerrainPlane :
-        GameObject,
+        GameElement,
         IDrawable3D,
         IUnloadable
     {

@@ -1,7 +1,7 @@
 ﻿using Raylib_cs;
-using GameFramework_SeaBedExplorationDemo.Engine.Base;
 using GameFramework_SeaBedExplorationDemo.Engine.Types;
 using GameFramework_SeaBedExplorationDemo.Engine.Systems.UI;
+using GameFramework_SeaBedExplorationDemo.Engine.Systems.Inputs;
 
 namespace GameFramework_SeaBedExplorationDemo.Engine.Systems.UI.Elements.Interactable
 {
@@ -50,7 +50,7 @@ namespace GameFramework_SeaBedExplorationDemo.Engine.Systems.UI.Elements.Interac
 
         private void SetValueOnMousePos()
         {
-            SetValue((Mouse.Position.X - Bounds.Min.X) / Bounds.Width * MaxValue);
+            SetValue((MouseInputManager.Position.X - Bounds.Min.X) / Bounds.Width * MaxValue);
         }
 
         public void SetValue(float newVal)

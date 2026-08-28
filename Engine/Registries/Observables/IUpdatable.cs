@@ -1,4 +1,4 @@
-﻿namespace GameFramework_SeaBedExplorationDemo.Engine.Observers.Observables
+﻿namespace GameFramework_SeaBedExplorationDemo.Engine.Registries.Observables
 {
     internal interface IUpdatable
     {

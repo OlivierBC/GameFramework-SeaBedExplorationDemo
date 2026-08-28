@@ -81,6 +81,48 @@
             );
         }
 
+        public static Quaternion CreateFromEulerDegrees(
+            Vector3 rotation
+        )
+        {
+            float pitch = rotation.X * MathF.PI / 180f;
+            float yaw = rotation.Y * MathF.PI / 180f;
+            float roll = rotation.Z * MathF.PI / 180f;
+
+            System.Numerics.Quaternion quaternion =
+                System.Numerics.Quaternion.CreateFromYawPitchRoll(
+                    yaw,
+                    pitch,
+                    roll
+                );
+
+            return new Quaternion(
+                quaternion.X,
+                quaternion.Y,
+                quaternion.Z,
+                quaternion.W
+            );
+        }
+
+        public static Quaternion Concatenate(
+            Quaternion first,
+            Quaternion second
+        )
+        {
+            System.Numerics.Quaternion quaternion =
+                System.Numerics.Quaternion.Concatenate(
+                    first.AsSystemNumerics,
+                    second.AsSystemNumerics
+                );
+
+            return new Quaternion(
+                quaternion.X,
+                quaternion.Y,
+                quaternion.Z,
+                quaternion.W
+            );
+        }
+
         public void ToAxisAngle(
             out Vector3 axis,
             out float angle
@@ -113,6 +155,61 @@
                 q.X / sinHalfAngle,
                 q.Y / sinHalfAngle,
                 q.Z / sinHalfAngle
+            );
+        }
+
+        public System.Numerics.Quaternion AsSystemNumerics =>
+            new(X, Y, Z, W);
+        public Vector3 ToEulerDegrees()
+        {
+            Quaternion q =
+                Normalize(this);
+
+            float pitch =
+                MathF.Asin(
+                    Math.Clamp(
+                        2f * (
+                            q.W * q.X -
+                            q.Y * q.Z
+                        ),
+                        -1f,
+                        1f
+                    )
+                );
+
+            float yaw =
+                MathF.Atan2(
+                    2f * (
+                        q.X * q.Z +
+                        q.W * q.Y
+                    ),
+                    1f -
+                    2f * (
+                        q.X * q.X +
+                        q.Y * q.Y
+                    )
+                );
+
+            float roll =
+                MathF.Atan2(
+                    2f * (
+                        q.X * q.Y +
+                        q.W * q.Z
+                    ),
+                    1f -
+                    2f * (
+                        q.X * q.X +
+                        q.Z * q.Z
+                    )
+                );
+
+            float radiansToDegrees =
+                180f / MathF.PI;
+
+            return new Vector3(
+                pitch * radiansToDegrees,
+                yaw * radiansToDegrees,
+                roll * radiansToDegrees
             );
         }
     }

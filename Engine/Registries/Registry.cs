@@ -1,6 +1,6 @@
-﻿using GameFramework_SeaBedExplorationDemo.Engine.Observers.Observables;
+﻿using GameFramework_SeaBedExplorationDemo.Engine.Registries.Observables;
 
-namespace GameFramework_SeaBedExplorationDemo.Engine.Observers
+namespace GameFramework_SeaBedExplorationDemo.Engine.Registries
 {
     public class Registry
     {
@@ -35,6 +35,27 @@ namespace GameFramework_SeaBedExplorationDemo.Engine.Observers
                 if (o is IUnloadable unloadable)
                     unloadObserver.Subscribe(unloadable);
             }
+        }
+
+        public void Remove(Object o)
+        {
+            if (o is IUpdatable updatable)
+                updateObserver.Unsubscribe(updatable);
+
+            if (o is IDrawable3D drawable3D)
+                drawObserver.Unsubscribe(drawable3D);
+
+            if (o is IDrawable2D drawable2D)
+                draw2DObserver.Unsubscribe(drawable2D);
+
+            if (o is IDrawableUI drawableUI)
+                drawUIObserver.Unsubscribe(drawableUI);
+
+            if (o is ILoadable loadable)
+                loadObserver.Unsubscribe(loadable);
+
+            if (o is IUnloadable unloadable)
+                unloadObserver.Unsubscribe(unloadable);
         }
 
         public void Update(float dt)

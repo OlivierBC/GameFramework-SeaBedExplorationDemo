@@ -5,7 +5,7 @@
 
 // This pattern implementation is simply based on what I'm used to working with: the unityEngine
 
-namespace GameFramework_SeaBedExplorationDemo.Engine.Observers
+namespace GameFramework_SeaBedExplorationDemo.Engine.Registries
 {
     internal class Observer<T>
     {
@@ -17,10 +17,10 @@ namespace GameFramework_SeaBedExplorationDemo.Engine.Observers
                 observables.Add(observable);
         }
 
-        public void AddRange(params T[] observables)
+        public void Unsubscribe(T objToUnsub)
         {
-            foreach (var observable in observables)
-                Subscribe(observable);
+            if (observables.Contains(objToUnsub))
+                observables.Remove(objToUnsub);
         }
 
         public void UnsubscribeAll()
@@ -32,6 +32,11 @@ namespace GameFramework_SeaBedExplorationDemo.Engine.Observers
         {
             foreach (var observable in observables)
                 action(observable);
+        }
+
+        public void NotifyOne(T obs, Action<T> action)
+        {
+            action(obs);
         }
     }
 }

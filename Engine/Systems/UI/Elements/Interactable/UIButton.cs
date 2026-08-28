@@ -1,21 +1,25 @@
-﻿using Raylib_cs;
+﻿using GameFramework_SeaBedExplorationDemo.Engine.Systems.UI.Structure;
 using GameFramework_SeaBedExplorationDemo.Engine.Types;
-using GameFramework_SeaBedExplorationDemo.Engine.Systems.UI;
-using GameFramework_SeaBedExplorationDemo.Engine.Systems.UI.Structure;
+using Raylib_cs;
 
 namespace GameFramework_SeaBedExplorationDemo.Engine.Systems.UI.Elements.Interactable
 {
     public class UIButton : UIElement
     {
-        public string Text;
+        public readonly string Text;
         public TextAlign TextAlign;
         public Action? OnClick;
+
+        float distanceFromLeftInPx;
 
         public UIButton(Vector2 min, Vector2 max, string text, Action? onClick, TextAlign textAlign = TextAlign.Center) : base(new(min, max))
         {
             Text = text;
             TextAlign = textAlign;
             OnClick = onClick;
+
+            float maxDistanceFromLeft = Bounds.Width - Raylib.MeasureText(Text, 20);
+            distanceFromLeftInPx = (TextAlign == TextAlign.Left ? 3f : TextAlign == TextAlign.Center ? maxDistanceFromLeft * 0.5f : maxDistanceFromLeft);
         }
 
         public override void Draw()
@@ -34,11 +38,7 @@ namespace GameFramework_SeaBedExplorationDemo.Engine.Systems.UI.Elements.Interac
                 color
             );
 
-            float distanceFromLeft = Bounds.Width - Raylib.MeasureText(Text, 20);
-
-            distanceFromLeft = distanceFromLeft * (TextAlign == TextAlign.Left ? 0.05f : TextAlign == TextAlign.Center ? 0.5f : 0.95f);
-
-            Raylib.DrawText(Text, (int)(Bounds.Min.X + distanceFromLeft), (int)(Bounds.Min.Y * 1.05f), 20, Color.Black);
+            Raylib.DrawText(Text, (int)(Bounds.Min.X + distanceFromLeftInPx), (int)(Bounds.Min.Y + 3f), 20, Color.Black); // 3f are really hardcoded here TODO
 
             base.Draw();
         }

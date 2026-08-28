@@ -1,11 +1,12 @@
 ﻿using GameFramework_SeaBedExplorationDemo.Engine.Base;
-using GameFramework_SeaBedExplorationDemo.Engine.Observers.Observables;
+using GameFramework_SeaBedExplorationDemo.Engine.Registries.Observables;
+using GameFramework_SeaBedExplorationDemo.Engine.Systems.Inputs;
 using GameFramework_SeaBedExplorationDemo.Engine.Types;
 using Raylib_cs;
 
 namespace GameFramework_SeaBedExplorationDemo.Project.Movements
 {
-    internal class Camera : GameObject, IUpdatable
+    internal class Camera : GameElement, IUpdatable
     {
         float moveSpeed;
         float rotationSpeed;
@@ -14,21 +15,20 @@ namespace GameFramework_SeaBedExplorationDemo.Project.Movements
         float pitch;
 
         public static bool IsRotationUnlocked { get; private set; } = false;
-        Vector2 mousePosBeforeDisable = new();
 
         public static Vector3 GetPosition()
         {
-            return instance.Position;
+            return Instance.Position;
         }
 
         public static Vector3 GetForward()
         {
             return Vector3.Normalize(
-                instance.Target - instance.Position
+                Instance.Target - Instance.Position
             );
         }
 
-        public static Camera3D instance = new()
+        public static Camera3D Instance = new()
         {
             Position = new Vector3(0, 6, 0),
             Target = new Vector3(0, 6, 1),
@@ -42,7 +42,7 @@ namespace GameFramework_SeaBedExplorationDemo.Project.Movements
             this.moveSpeed = moveSpeed;
             this.rotationSpeed = rotationSpeed;
 
-            position = instance.Position;
+            Transform.Position = Instance.Position;
         }
 
         public void Update(float dt)
@@ -63,17 +63,17 @@ namespace GameFramework_SeaBedExplorationDemo.Project.Movements
             if (m.LengthSquared() > 0)
                 m = Vector2.Normalize(m);
 
-            position += moveSpeed * dt * ((flatForward * m.Y) - (right * m.X));
+            Transform.Position += moveSpeed * dt * ((flatForward * m.Y) - (right * m.X));
 
             if (Raylib.IsKeyDown(KeyboardKey.Space))
-                position += Vector3.UnitY * moveSpeed * dt;
+                Transform.Position += Vector3.UnitY * moveSpeed * dt;
 
             if (Raylib.IsKeyDown(KeyboardKey.LeftShift))
-                position -= Vector3.UnitY * moveSpeed * dt;
+                Transform.Position -= Vector3.UnitY * moveSpeed * dt;
 
-            instance.Position = position;
-            instance.Target = position + forward;
-            instance.Up = Vector3.UnitY;
+            Instance.Position = Transform.Position;
+            Instance.Target = Transform.Position + forward;
+            Instance.Up = Vector3.UnitY;
         }
 
         Vector2 Movement()
@@ -90,10 +90,10 @@ namespace GameFramework_SeaBedExplorationDemo.Project.Movements
         {
             SetCursorState();
 
-            if (!IsRotationUnlocked)
+            if (!CursorManager.IsLockedBy(this))
                 return;
 
-            Vector2 mouseDelta = Mouse.Delta;
+            Vector2 mouseDelta = MouseInputManager.Delta;
 
             yaw -= mouseDelta.X * rotationSpeed;
             pitch -= mouseDelta.Y * rotationSpeed;
@@ -105,22 +105,14 @@ namespace GameFramework_SeaBedExplorationDemo.Project.Movements
 
         void SetCursorState()
         {
-            if (Mouse.IsBtnReleased(MouseButton.Right))
-            {
-                Vector2Int v = new(mousePosBeforeDisable);
-                Raylib.EnableCursor();
-                Raylib.SetMousePosition(v.X, v.Y);
-            }
+            if (Raylib.IsMouseButtonPressed(MouseButton.Right))
+                CursorManager.TryLock(this);
 
-            if (Mouse.IsBtnPressed(MouseButton.Right))
-            {
-                mousePosBeforeDisable = Mouse.Position;
-                Raylib.DisableCursor();
-            }
+            if (Raylib.IsMouseButtonReleased(MouseButton.Right))
+                CursorManager.Unlock(this);
 
-            IsRotationUnlocked = Mouse.IsBtnDown(MouseButton.Right);
-
-            Mouse.IsHitDetectionDisabled = IsRotationUnlocked;
+            IsRotationUnlocked =
+                CursorManager.IsLockedBy(this);
         }
 
         Vector3 CalculateForward()

@@ -1,19 +1,20 @@
 ﻿using GameFramework_SeaBedExplorationDemo.Engine.Collisions;
 using GameFramework_SeaBedExplorationDemo.Engine.Types;
+using GameFramework_SeaBedExplorationDemo.Engine.Types.Interface;
 
 namespace GameFramework_SeaBedExplorationDemo.Engine.Systems.UI
 {
-    public abstract class UIElement
+    public abstract class UIElement : IToggleable
     {
         public UIRect Bounds;
-
-        public bool IsEnabled = true;
 
         public bool IsHovered = false;
         public bool IsCaptured = false;
         public bool IsPressed = false;
 
         public List<UIElement> Children = new();
+
+        public bool IsEnabled { get; private set; }
 
         protected UIElement(UIRect bounds)
         {
@@ -27,7 +28,7 @@ namespace GameFramework_SeaBedExplorationDemo.Engine.Systems.UI
                 child.Draw();
         }
 
-        public bool Contains(Vector2 point)
+        public virtual bool Contains(Vector2 point)
         {
             return Bounds.Contains(point);
         }
@@ -43,6 +44,9 @@ namespace GameFramework_SeaBedExplorationDemo.Engine.Systems.UI
             {
                 Reset();
             }
+
+            foreach (UIElement child in Children)
+                child.Toggle();
         }
 
         public void Reset()

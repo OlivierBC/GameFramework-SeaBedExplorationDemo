@@ -1,7 +1,6 @@
-﻿using GameFramework_SeaBedExplorationDemo.Engine.Observers;
+﻿using GameFramework_SeaBedExplorationDemo.Engine.Registries;
+using GameFramework_SeaBedExplorationDemo.Engine.Systems.Inputs;
 using GameFramework_SeaBedExplorationDemo.Engine.Systems.Scene;
-using GameFramework_SeaBedExplorationDemo.Engine.Systems.UI;
-using GameFramework_SeaBedExplorationDemo.Engine.Systems.UI.Elements.Interactable;
 using GameFramework_SeaBedExplorationDemo.Project.Movements;
 using GameFramework_SeaBedExplorationDemo.Project.Scenes;
 using Raylib_cs;
@@ -13,27 +12,16 @@ Raylib.InitWindow(screenWidth, screenHeight, "Sea Bed Exploration Demo");
 
 Registry MainRegistry = new();
 
-Scene scene = new GeometryTestScene();
-SceneManager sceneManager = new SceneManager(scene);
+SceneManager.MainInstance.ChangeScene<EditorScene>();
 
-UIManager uiManager = new UIManager();
-
-UIButton toggleScenes = new(new(50, 50), new(220, 120), "Change Scene",
-    () =>
-    {
-        if (sceneManager.CurrentScene is GeometryTestScene)
-            sceneManager.ChangeSceneNextFrame<BoidScene>();
-        else
-            sceneManager.ChangeSceneNextFrame<GeometryTestScene>();
-    }
-);
-
-uiManager.Add(toggleScenes);
+InputManager.MainInstance.Add(new("1", KeyboardKey.One, InputAction.InputCallbackMode.OnPressed, SceneManager.MainInstance.ChangeSceneNextFrame<GeometryTestScene>));
+InputManager.MainInstance.Add(new("2", KeyboardKey.Two, InputAction.InputCallbackMode.OnPressed, SceneManager.MainInstance.ChangeSceneNextFrame<BoidScene>));
+InputManager.MainInstance.Add(new("3", KeyboardKey.Three, InputAction.InputCallbackMode.OnPressed, SceneManager.MainInstance.ChangeSceneNextFrame<EditorScene>));
 
 Camera gameCamera = new();
 
-MainRegistry.Add(uiManager);
-MainRegistry.Add(sceneManager);
+MainRegistry.Add(SceneManager.MainInstance);
+MainRegistry.Add(InputManager.MainInstance);
 
 MainRegistry.Add(gameCamera);
 
@@ -43,14 +31,14 @@ while (!Raylib.WindowShouldClose())
 {
     float dt = Raylib.GetFrameTime();
 
-    sceneManager.ProcessTransition();
+    SceneManager.MainInstance.ProcessTransition();
 
     MainRegistry.Update(dt);
 
     Raylib.BeginDrawing();
     Raylib.ClearBackground(new Color(8, 25, 45, 255));
 
-    Raylib.BeginMode3D(Camera.instance);
+    Raylib.BeginMode3D(Camera.Instance);
 
     MainRegistry.Draw();
 

@@ -1,4 +1,4 @@
-﻿using GameFramework_SeaBedExplorationDemo.Engine.Observers.Observables;
+﻿using GameFramework_SeaBedExplorationDemo.Engine.Registries.Observables;
 
 namespace GameFramework_SeaBedExplorationDemo.Engine.Systems.ECS
 {

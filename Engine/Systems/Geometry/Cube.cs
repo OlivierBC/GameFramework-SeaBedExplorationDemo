@@ -1,11 +1,11 @@
 ﻿using GameFramework_SeaBedExplorationDemo.Engine.Base;
-using GameFramework_SeaBedExplorationDemo.Engine.Observers.Observables;
+using GameFramework_SeaBedExplorationDemo.Engine.Registries.Observables;
 using GameFramework_SeaBedExplorationDemo.Engine.Types;
 using Raylib_cs;
 
 namespace GameFramework_SeaBedExplorationDemo.Engine.Systems.Geometry
 {
-    public class Cube : GameObject, IDrawable3D
+    public class Cube : GameElement, IDrawable3D
     {
         public Vector3 Size { get; set; }
         public Color Color { get; set; }
@@ -18,10 +18,8 @@ namespace GameFramework_SeaBedExplorationDemo.Engine.Systems.Geometry
 
         public void Draw()
         {
-            Vector3 drawPosition = position;
-
             Raylib.DrawCube(
-                drawPosition,
+                Transform.Position,
                 Size.X,
                 Size.Y,
                 Size.Z,
